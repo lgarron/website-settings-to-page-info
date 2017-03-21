@@ -39,7 +39,7 @@ function sed_cpp
   set -e argv[1]
   set replacement_args $argv
 
-  for file in (ag --cpp --objcpp "$common_match" -l)
+  for file in (ag --cpp --objcpp --java "$common_match" -l)
     for replacement in $replacement_args
       echo -n "."
       gsed --in-place="" $replacement $file
@@ -76,18 +76,46 @@ function step_2_rename_classes
   # (scoped to desktop page_info folders)
 
   addTokenReplacement "ClearWebsiteSettings" "ClearPageInfo"
+  # addTokenReplacement "FlushLossyWebsiteSettings" "FlushLossyPageInfo"
+  addTokenReplacement "Java_WebsiteSettingsPopup_addPermissionSection" "Java_PageInfoPopup_addPermissionSection"
+  addTokenReplacement "Java_WebsiteSettingsPopup_setSecurityDescription" "Java_PageInfoPopup_setSecurityDescription"
+  addTokenReplacement "Java_WebsiteSettingsPopup_updatePermissionDisplay" "Java_PageInfoPopup_updatePermissionDisplay"
+  # addTokenReplacement "LaunchedFromWebsiteSettingsPopup" "LaunchedFromPageInfoPopup"
+  # addTokenReplacement "MobileWebsiteSettingsOpenedFromMenu" "MobilePageInfoOpenedFromMenu"
+  # addTokenReplacement "MobileWebsiteSettingsOpenedFromToolbar" "MobilePageInfoOpenedFromToolbar"
   addTokenReplacement "MockWebsiteSettingsUI" "MockPageInfoUI"
+  addTokenReplacement "RecordActionInWebsiteSettings" "RecordActionInPageInfo"
   addTokenReplacement "RecordWebsiteSettingsAction" "RecordPageInfoAction"
+  addTokenReplacement "RegisterWebsiteSettingsPopupAndroid" "RegisterPageInfoPopupAndroid"
+  addTokenReplacement "ShowWebsiteSettings" "ShowPageInfo"
+  addTokenReplacement "ShowWebsiteSettingsBubbleViewsAtPoint" "ShowPageInfoBubbleViewsAtPoint"
   addTokenReplacement "SizeForWebsiteSettingsButtonTitle" "SizeForPageInfoButtonTitle"
+  addTokenReplacement "WebSiteSettingsPopupViewBrowserTest" "PageInfoPopupViewBrowserTest"
+  addTokenReplacement "WebSiteSettingsUmaUtil" "PageInfoUmaUtil"
   addTokenReplacement "WebsiteSettings" "PageInfo"
   addTokenReplacement "WebsiteSettingsAction" "PageInfoAction"
   addTokenReplacement "WebsiteSettingsBubbleController" "PageInfoBubbleController"
+  addTokenReplacement "WebsiteSettingsBubbleControllerForTesting" "PageInfoBubbleControllerForTesting"
+  addTokenReplacement "WebsiteSettingsBubbleControllerTest" "PageInfoBubbleControllerTest"
+  addTokenReplacement "WebsiteSettingsFilterAdapter" "PageInfoFilterAdapter"
+  addTokenReplacement "WebsiteSettingsInfo" "PageInfoInfo"
+  addTokenReplacement "WebsiteSettingsInfoBarDelegate" "PageInfoInfoBarDelegate"
+  addTokenReplacement "WebsiteSettingsPopup" "PageInfoPopup"
+  addTokenReplacement "WebsiteSettingsPopupAndroid" "PageInfoPopupAndroid"
   addTokenReplacement "WebsiteSettingsPopupView" "PageInfoPopupView"
   addTokenReplacement "WebsiteSettingsPopupViewTest" "PageInfoPopupViewTest"
   addTokenReplacement "WebsiteSettingsPopupViewTestApi" "PageInfoPopupViewTestApi"
+  addTokenReplacement "WebsiteSettingsPopup_jni" "PageInfoPopup_jni"
+  addTokenReplacement "WebsiteSettingsRegistry" "PageInfoRegistry"
+  addTokenReplacement "WebsiteSettingsRegistryTest" "PageInfoRegistryTest"
   addTokenReplacement "WebsiteSettingsTest" "PageInfoTest"
   addTokenReplacement "WebsiteSettingsUI" "PageInfoUI"
   addTokenReplacement "WebsiteSettingsUIBridge" "PageInfoUIBridge"
+  addTokenReplacement "WebsiteSettingsUtils" "PageInfoUtils"
+  addTokenReplacement "getWebsiteSettingsFilterPreference" "getPageInfoFilterPreference"
+  addTokenReplacement "mNativeWebsiteSettingsPopup" "mNativePageInfoPopup"
+  addTokenReplacement "nativeWebsiteSettingsPopupAndroid" "nativePageInfoPopupAndroid"
+  addTokenReplacement "setWebsiteSettingsFilterPreference" "setPageInfoFilterPreference"
   addTokenReplacement "websiteSettingsUIBridge" "PageInfoUIBridge"
 
   sed_and_reset "WebsiteSettings"
@@ -102,3 +130,9 @@ end
 step_1_rename_files
 step_2_rename_classes
 git cl format
+
+# Android
+# WebsiteSettingsBubbleControllerForTesting
+# Website settings
+# WebSiteSettingsPopupViewBrowserTest and other test names.
+# TODO(sashab): Rename this, and all its resources
