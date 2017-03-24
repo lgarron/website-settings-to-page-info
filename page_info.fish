@@ -474,12 +474,21 @@ function step_2_rename_contents
 
   # website_settings_popup_view.cc
   addTokenReplacement "too large for the website settings" "too large for the page info"
-  addTokenReplacement "Website Settings are not" "The regular PageInfoPopupView"
+  addTokenReplacement "Website Settings are not" "The regular PageInfoPopupView is not"
 
-  # rome/browser/ui/cocoa/page_info/website_settings_bubble_controller.m
+  # chrome/browser/ui/cocoa/page_info/website_settings_bubble_controller.m
   addTokenReplacement "more than one website settings" "more than one page info"
 
+  # chrome/browser/ui/browser_window.h
+  addTokenReplacement "Shows the website settings using" "Shows Page Info using"
+
   sed_and_reset "website settings" .
+
+  ################
+
+  addTokenReplacement "Provides a bridge between the WebSettingsUI" "Provides a bridge between the PageInfoUI"
+
+  sed_and_reset "WebSettingsUI" .
 
   ################################
 
@@ -519,9 +528,17 @@ function step_2_rename_contents
 
 end
 
+function step_3_remove_comments
+  # Delete two lines: http://unix.stackexchange.com/questions/56123/remove-line-containing-certain-string-and-the-following-line
+  sed --in-place="" \
+    '/and all its resources/,+1 d' \
+    "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java"
+  # Delete before and after: http://stackoverflow.com/questions/9442681/delete-n1-previous-lines-and-n2-lines-following-with-respect-to-a-line-containin
+  vim -c 'g/Normalize all/-1,+1d' -c 'x' \
+    "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.h"
+end
+
 step_1_rename_files
 step_2_rename_contents
+step_3_remove_comments
 
-# Remove TODO comments about this rename:
-# chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java
-# chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.h
